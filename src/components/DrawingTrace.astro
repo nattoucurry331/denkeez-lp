@@ -214,6 +214,15 @@
     padding: 24px;
     animation: fadeIn 0.3s ease;
   }
+  /* hidden 属性が display:flex に上書きされてしまうので明示 */
+  .trace-result[hidden] {
+    display: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
   .trace-emoji {
     font-size: 3rem;

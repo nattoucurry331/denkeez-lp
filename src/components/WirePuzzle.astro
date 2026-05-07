@@ -182,6 +182,10 @@
     backdrop-filter: blur(6px);
     animation: fadeIn 0.3s ease;
   }
+  /* hidden 属性は HTML 標準で display:none だが、display:flex に上書きされるので明示 */
+  .game-cleared-overlay[hidden] {
+    display: none;
+  }
 
   @keyframes fadeIn {
     from { opacity: 0; }
