@@ -3,8 +3,9 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://denkeez.app',
-  // GitHub Pages や Vercel 直サブドメインでも動くよう base は省略
+  // 公開 URL (OGP / Sitemap / canonical で使用)。
+  // 独自ドメイン取得時に変更すること。
+  site: 'https://denkeez-lp.pages.dev',
   output: 'static',
   build: {
     inlineStylesheets: 'auto',

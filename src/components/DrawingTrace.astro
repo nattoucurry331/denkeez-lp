@@ -92,7 +92,7 @@
       const r = trace?.getResult();
       if (!r) return;
       const text = `🎮 Denkeez 製図トレースで ${r.score} 点 (${r.diagnosis.rank} ${r.diagnosis.emoji}) を取ったよ! #Denkeez`;
-      const url = 'https://denkeez.app';
+      const url = 'https://denkeez-lp.pages.dev';
       if (navigator.share) {
         navigator.share({ text, url }).catch(() => {});
       } else {
