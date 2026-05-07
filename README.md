@@ -51,15 +51,27 @@ denkeez-lp/
     └── favicon.svg
 ```
 
-## デプロイ
+## デプロイ (Cloudflare Pages)
 
-Vercel にプッシュベースで連動する想定:
+GitHub にプッシュ → Cloudflare Pages が自動ビルド & 公開:
 
 1. GitHub リポジトリ `denkeez-lp` を作成
 2. このフォルダの内容を push
-3. https://vercel.com で Import Repository
-4. ビルドコマンド: `npm run build`、出力ディレクトリ: `dist`
-5. 公開 URL を取得 → 必要なら独自ドメインを向ける
+3. https://dash.cloudflare.com → **Workers & Pages** → **Create** → **Pages**
+4. **Connect to Git** で `denkeez-lp` を接続
+5. Build 設定:
+   - Framework preset: `Astro`
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+   - 環境変数: `NODE_VERSION = 20` (`.nvmrc` でも OK、本リポジトリは `.nvmrc=20` 同梱)
+6. Save and Deploy → 2〜3 分で `https://denkeez-lp.pages.dev` が公開
+
+セキュリティヘッダ・キャッシュ制御は `public/_headers` で定義。
+
+### 独自ドメイン
+
+Cloudflare 上のプロジェクトページ → Custom domains → Add domain。
+Cloudflare 取得ドメインなら自動で繋がる。他社取得ドメインは表示される DNS レコードを設定する。
 
 ## ライセンス
 
