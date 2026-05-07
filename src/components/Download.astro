@@ -1,0 +1,116 @@
+---
+// β版ダウンロードセクション
+const REPO_URL = 'https://github.com/nattoucurry331/denkeez';
+---
+
+<section class="section download-section" id="download">
+  <h2 class="section-title">β版を試してみる</h2>
+  <p class="section-subtitle">
+    Windows 10 / 11 で動作する無料アプリです。インストール後はネット接続なしで使えます。
+  </p>
+
+  <div class="download-card">
+    <div class="download-badge">β 版</div>
+    <h3 class="download-title">最新版を GitHub からダウンロード</h3>
+    <p class="download-desc">
+      <code>Denkeez_x.x.x_x64-setup.exe</code> をクリックして実行 → インストール完了。
+      <br />
+      自動更新付きなので、新版が出ると起動時に通知が来ます。
+    </p>
+    <a
+      href={`${REPO_URL}/releases/latest`}
+      target="_blank"
+      rel="noopener"
+      class="btn-primary download-cta"
+    >
+      <span>📥 GitHub Releases へ</span>
+      <span aria-hidden="true">→</span>
+    </a>
+
+    <details class="download-warn">
+      <summary>「このアプリは Windows によって保護されました」と出たら</summary>
+      <div class="download-warn-body">
+        <p>
+          β版は コード署名証明書を取得していないため、Windows SmartScreen 警告が出ます。
+        </p>
+        <ol>
+          <li>警告画面の「<strong>詳細情報</strong>」をクリック</li>
+          <li>下部に出る「<strong>実行</strong>」ボタンをクリック</li>
+        </ol>
+        <p>これは β 版だからの一時的な手順です。本配布フェーズで証明書を取得します。</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<style>
+  .download-card {
+    position: relative;
+    padding: 40px 32px;
+    background: linear-gradient(135deg, #142036, #0c1424);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 16px;
+    text-align: center;
+  }
+
+  .download-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--neon-yellow);
+    color: var(--bg-deep);
+    font-weight: 700;
+    font-size: 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+
+  .download-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .download-desc {
+    color: var(--fg-muted);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .download-desc code {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: var(--neon-cyan);
+  }
+
+  .download-cta {
+    margin-bottom: 24px;
+  }
+
+  .download-warn {
+    margin-top: 24px;
+    text-align: left;
+    background: rgba(255, 138, 45, 0.06);
+    border: 1px solid rgba(255, 138, 45, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  .download-warn summary {
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: var(--neon-orange);
+    font-weight: 600;
+  }
+  .download-warn-body {
+    margin-top: 12px;
+    font-size: 0.88rem;
+    color: var(--fg-muted);
+  }
+  .download-warn-body p {
+    margin-bottom: 8px;
+  }
+  .download-warn-body ol {
+    margin: 8px 0 8px 20px;
+  }
+</style>

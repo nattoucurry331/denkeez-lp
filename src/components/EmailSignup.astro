@@ -1,0 +1,134 @@
+---
+// メアド登録 (Substack 埋込予定、現状はプレースホルダー)
+---
+
+<section class="section" id="signup">
+  <h2 class="section-title">アップデート通知 + 業界 DX のコラム</h2>
+  <p class="section-subtitle">
+    新版リリース、不具合修正、現役建設業者の DX 試行錯誤を月 1 回お届けします。
+  </p>
+
+  <div class="signup-card">
+    <p class="signup-purpose">
+      ご登録いただいたメールアドレスは、以下の目的で利用します:
+    </p>
+    <ul class="signup-purpose-list">
+      <li>本アプリのサポート連絡</li>
+      <li>新版リリース通知</li>
+      <li>北嶺建設が提供する関連サービスのご案内</li>
+      <li>業界 DX のコラム配信(ご希望の方のみ)</li>
+    </ul>
+
+    <form class="signup-form" id="signup-form" onsubmit="return false;">
+      <label class="signup-label" for="signup-email">メールアドレス</label>
+      <input
+        type="email"
+        id="signup-email"
+        name="email"
+        required
+        placeholder="your@email.com"
+        class="signup-input"
+        autocomplete="email"
+      />
+      <button type="submit" class="btn-primary signup-btn">
+        登録する
+      </button>
+    </form>
+
+    <p class="signup-coming-soon">
+      🚧 配信プラットフォーム整備中です。準備ができ次第ここから直接登録できるようになります。
+      <br />
+      お急ぎの方は <a href="https://github.com/nattoucurry331/denkeez/issues" target="_blank" rel="noopener">GitHub Issue</a> または直接連絡ください。
+    </p>
+
+    <p class="signup-policy">
+      <a href="https://github.com/nattoucurry331/denkeez/blob/main/docs/privacy-policy.md" target="_blank" rel="noopener">
+        プライバシーポリシー
+      </a>
+      に同意の上ご登録ください。配信解除はいつでも可能です。
+    </p>
+  </div>
+</section>
+
+<style>
+  .signup-card {
+    padding: 32px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+  }
+
+  .signup-purpose {
+    font-size: 0.9rem;
+    color: var(--fg-muted);
+    margin-bottom: 8px;
+  }
+
+  .signup-purpose-list {
+    margin: 0 0 24px 20px;
+    color: var(--fg-muted);
+    font-size: 0.88rem;
+  }
+  .signup-purpose-list li {
+    margin-bottom: 4px;
+  }
+
+  .signup-form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .signup-label {
+    width: 100%;
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    margin-bottom: 4px;
+  }
+
+  .signup-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: var(--fg);
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  .signup-input:focus {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 1px;
+  }
+
+  .signup-btn {
+    flex-shrink: 0;
+  }
+
+  .signup-coming-soon {
+    padding: 12px 16px;
+    background: rgba(240, 160, 0, 0.08);
+    border-left: 3px solid var(--warn);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--fg);
+    margin-bottom: 12px;
+  }
+
+  .signup-policy {
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+  }
+
+  @media (max-width: 640px) {
+    .signup-form {
+      flex-direction: column;
+    }
+    .signup-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

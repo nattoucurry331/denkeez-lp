@@ -1,0 +1,251 @@
+---
+// 📐 製図トレース — ゲーム C
+---
+
+<section class="section game-section" id="game-trace">
+  <div class="game-header">
+    <span class="game-tag tag-magenta">🎮 Bonus Game</span>
+    <h2 class="section-title">製図トレース</h2>
+    <p class="section-subtitle">
+      お手本のラインを指でなぞって、画力 (= 電気工事士の資質) を 100 点満点で診断します。
+      <br />
+      <span class="trace-hint-mobile">📱 スマホで遊ぶと指でなぞれます</span>
+    </p>
+  </div>
+
+  <div class="game-card">
+    <div class="game-status-bar">
+      <span id="trace-status" class="game-status">お題: おうちの形</span>
+      <div class="game-buttons">
+        <button id="trace-skip" type="button" class="btn-mini">▶︎ 次のお題</button>
+        <button id="trace-reset" type="button" class="btn-mini">🔄 やり直し</button>
+      </div>
+    </div>
+    <div class="game-stage-wrap trace-stage-wrap">
+      <canvas id="trace-canvas" class="game-canvas"></canvas>
+      <div id="trace-result" class="trace-result" hidden>
+        <p class="trace-emoji" id="trace-result-emoji">⚡</p>
+        <p class="trace-score" id="trace-result-score">0 点</p>
+        <p class="trace-rank" id="trace-result-rank">-</p>
+        <p class="trace-comment" id="trace-result-comment">-</p>
+        <div class="trace-actions">
+          <button id="trace-retry" type="button" class="btn-primary">もう一度</button>
+          <button id="trace-share" type="button" class="btn-secondary">📤 結果をシェア</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { DrawingTrace, TARGETS } from '../games/drawing-trace';
+
+  function init() {
+    const canvas = document.getElementById('trace-canvas') as HTMLCanvasElement | null;
+    const status = document.getElementById('trace-status');
+    const result = document.getElementById('trace-result');
+    const resultEmoji = document.getElementById('trace-result-emoji');
+    const resultScore = document.getElementById('trace-result-score');
+    const resultRank = document.getElementById('trace-result-rank');
+    const resultComment = document.getElementById('trace-result-comment');
+    const skipBtn = document.getElementById('trace-skip') as HTMLButtonElement | null;
+    const resetBtn = document.getElementById('trace-reset') as HTMLButtonElement | null;
+    const retryBtn = document.getElementById('trace-retry') as HTMLButtonElement | null;
+    const shareBtn = document.getElementById('trace-share') as HTMLButtonElement | null;
+    if (!canvas || !status || !result || !resultEmoji || !resultScore || !resultRank
+        || !resultComment || !skipBtn || !resetBtn || !retryBtn || !shareBtn) return;
+
+    let targetIdx = 0;
+    let trace: DrawingTrace | null = null;
+
+    const updateUI = () => {
+      if (!trace) return;
+      status.textContent = `お題: ${TARGETS[targetIdx]?.name ?? '-'}`;
+      const r = trace.getResult();
+      if (r) {
+        resultEmoji.textContent = r.diagnosis.emoji;
+        resultScore.textContent = `${r.score} 点`;
+        resultRank.textContent = r.diagnosis.rank;
+        resultComment.textContent = r.diagnosis.comment;
+        result.removeAttribute('hidden');
+      } else {
+        result.setAttribute('hidden', '');
+      }
+    };
+
+    const start = (idx: number) => {
+      targetIdx = idx;
+      const t = TARGETS[idx];
+      if (!t) return;
+      if (trace) {
+        trace.loadTarget(t);
+      } else {
+        trace = new DrawingTrace(canvas, t, updateUI);
+      }
+      updateUI();
+    };
+
+    skipBtn.addEventListener('click', () => start((targetIdx + 1) % TARGETS.length));
+    resetBtn.addEventListener('click', () => trace?.reset());
+    retryBtn.addEventListener('click', () => trace?.reset());
+    shareBtn.addEventListener('click', () => {
+      const r = trace?.getResult();
+      if (!r) return;
+      const text = `🎮 Denkeez 製図トレースで ${r.score} 点 (${r.diagnosis.rank} ${r.diagnosis.emoji}) を取ったよ! #Denkeez`;
+      const url = 'https://denkeez.app';
+      if (navigator.share) {
+        navigator.share({ text, url }).catch(() => {});
+      } else {
+        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+        window.open(tweetUrl, '_blank', 'noopener');
+      }
+    });
+
+    start(0);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>
+
+<style>
+  .game-section {
+    max-width: 760px;
+  }
+
+  .game-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .game-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255, 234, 61, 0.12);
+    border: 1px solid rgba(255, 234, 61, 0.4);
+    color: var(--neon-yellow);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .tag-magenta {
+    background: rgba(255, 45, 209, 0.12);
+    border-color: rgba(255, 45, 209, 0.4);
+    color: var(--neon-magenta);
+  }
+
+  .trace-hint-mobile {
+    color: var(--neon-cyan);
+    font-size: 0.85rem;
+  }
+
+  .game-card {
+    background: linear-gradient(135deg, #1a0c24, #0a0814);
+    border: 1px solid rgba(255, 45, 209, 0.18);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(255, 45, 209, 0.08);
+  }
+
+  .game-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .game-status {
+    color: var(--fg-muted);
+  }
+
+  .game-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-mini {
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: var(--fg);
+    font-size: 0.82rem;
+  }
+  .btn-mini:hover {
+    border-color: var(--neon-magenta);
+    background: rgba(255, 45, 209, 0.06);
+  }
+
+  .trace-stage-wrap {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(255, 45, 209, 0.06), transparent 70%);
+    cursor: crosshair;
+  }
+
+  .trace-result {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 9, 15, 0.92);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    padding: 24px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .trace-emoji {
+    font-size: 3rem;
+    margin-bottom: 4px;
+  }
+
+  .trace-score {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 20px rgba(255, 234, 61, 0.5);
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  .trace-rank {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--neon-magenta);
+    margin-bottom: 8px;
+  }
+
+  .trace-comment {
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    margin-bottom: 20px;
+  }
+
+  .trace-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

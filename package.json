@@ -1,0 +1,24 @@
+{
+  "name": "denkeez-lp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Denkeez ランディングページ (電気工事図面エディタ) — 北嶺建設",
+  "scripts": {
+    "dev": "astro dev --port 4321",
+    "start": "astro dev --port 4321",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

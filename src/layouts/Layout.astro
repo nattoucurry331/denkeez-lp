@@ -1,0 +1,156 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = '電気工事の現場に効く、無料で使える平面図エディタ。' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0e1a" />
+
+    <!-- OGP / Twitter Card -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://denkeez.app" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://github.com" />
+
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #0a0e1a;
+    --bg-deep: #06090f;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --fg: #e8eef7;
+    --fg-muted: #8a96aa;
+    --neon-cyan: #00f0ff;
+    --neon-magenta: #ff2dd1;
+    --neon-yellow: #ffea3d;
+    --neon-green: #3dff7a;
+    --neon-orange: #ff8a2d;
+    --accent: #4f6cff;
+    --warn: #f0a000;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+      'Yu Gothic', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  a {
+    color: var(--neon-cyan);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  a:hover {
+    color: var(--neon-magenta);
+  }
+
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--neon-cyan);
+    color: var(--bg-deep);
+  }
+
+  /* セクション共通 */
+  .section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-subtitle {
+    color: var(--fg-muted);
+    font-size: 1rem;
+    margin-bottom: 40px;
+  }
+
+  /* Primary button (CTA) */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--accent));
+    color: var(--bg-deep);
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 0 24px rgba(0, 240, 255, 0.4);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 36px rgba(0, 240, 255, 0.6);
+    color: var(--bg-deep);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .btn-secondary:hover {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.05);
+    color: var(--fg);
+  }
+
+  @media (max-width: 640px) {
+    .section {
+      padding: 60px 18px;
+    }
+  }
+</style>

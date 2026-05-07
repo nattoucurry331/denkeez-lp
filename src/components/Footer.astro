@@ -1,0 +1,61 @@
+---
+const REPO_URL = 'https://github.com/nattoucurry331/denkeez';
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <p class="footer-title">Denkeez(デンキーズ・仮称)</p>
+      <p class="footer-meta">© 2026 有限会社 北嶺建設</p>
+    </div>
+    <nav class="footer-links" aria-label="フッターリンク">
+      <a href={REPO_URL} target="_blank" rel="noopener">GitHub</a>
+      <a href={`${REPO_URL}/releases/latest`} target="_blank" rel="noopener">ダウンロード</a>
+      <a href={`${REPO_URL}/issues`} target="_blank" rel="noopener">不具合報告</a>
+      <a href={`${REPO_URL}/blob/main/LICENSE`} target="_blank" rel="noopener">ライセンス</a>
+      <a href={`${REPO_URL}/blob/main/docs/privacy-policy.md`} target="_blank" rel="noopener">プライバシー</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 32px 24px;
+    margin-top: 60px;
+  }
+
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-title {
+    font-weight: 700;
+    color: var(--fg);
+  }
+  .footer-meta {
+    font-size: 0.82rem;
+    color: var(--fg-muted);
+    margin-top: 4px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 540px) {
+    .footer-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

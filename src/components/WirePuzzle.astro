@@ -1,0 +1,222 @@
+---
+// 🔌 ネオン配線パズル — ゲーム A
+---
+
+<section class="section game-section" id="game-wire">
+  <div class="game-header">
+    <span class="game-tag">🎮 Game</span>
+    <h2 class="section-title">ネオン配線パズル</h2>
+    <p class="section-subtitle">
+      同じ色の端点を指でなぞって繋いで、すべての配線を完成させよう。
+      <br />
+      線は交差させずに、グリッドを上手く使って。
+    </p>
+  </div>
+
+  <div class="game-card">
+    <div class="game-status-bar">
+      <span id="wire-status" class="game-status">レベル 1 / 3 · 0 / 3 ペア接続済み</span>
+      <div class="game-buttons">
+        <button id="wire-reset" type="button" class="btn-mini" aria-label="リセット">
+          🔄 やり直し
+        </button>
+      </div>
+    </div>
+    <div class="game-stage-wrap">
+      <canvas id="wire-canvas" class="game-canvas"></canvas>
+      <div id="wire-cleared-overlay" class="game-cleared-overlay" hidden>
+        <div class="cleared-card">
+          <p class="cleared-emoji">⚡</p>
+          <p class="cleared-title">クリア!</p>
+          <p class="cleared-msg">
+            これが配線。Denkeez では <strong>マウスでこれを 100 倍楽に</strong>。
+          </p>
+          <div class="cleared-actions">
+            <button id="wire-next" type="button" class="btn-primary">次のレベル →</button>
+            <a href="#download" class="btn-secondary">本物の Denkeez を試す</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { WirePuzzle, LEVELS } from '../games/wire-puzzle';
+
+  function init() {
+    const canvas = document.getElementById('wire-canvas') as HTMLCanvasElement | null;
+    const status = document.getElementById('wire-status');
+    const overlay = document.getElementById('wire-cleared-overlay');
+    const resetBtn = document.getElementById('wire-reset') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('wire-next') as HTMLButtonElement | null;
+    if (!canvas || !status || !overlay || !resetBtn || !nextBtn) return;
+
+    let levelIdx = 0;
+    let game: WirePuzzle | null = null;
+
+    const updateStatus = () => {
+      if (!game) return;
+      const total = game.totalPairs();
+      const connected = game.countConnectedPairs();
+      status.textContent = `レベル ${levelIdx + 1} / ${LEVELS.length} · ${connected} / ${total} ペア接続済み`;
+      if (game.isCleared()) {
+        overlay.removeAttribute('hidden');
+      } else {
+        overlay.setAttribute('hidden', '');
+      }
+    };
+
+    const start = (idx: number) => {
+      levelIdx = idx;
+      const lvl = LEVELS[idx];
+      if (!lvl) return;
+      if (game) {
+        game.loadLevel(lvl);
+      } else {
+        game = new WirePuzzle(canvas, lvl, updateStatus);
+      }
+      updateStatus();
+    };
+
+    resetBtn.addEventListener('click', () => game?.reset());
+    nextBtn.addEventListener('click', () => {
+      const next = (levelIdx + 1) % LEVELS.length;
+      start(next);
+    });
+
+    start(0);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>
+
+<style>
+  .game-section {
+    max-width: 760px;
+  }
+
+  .game-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .game-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255, 234, 61, 0.12);
+    border: 1px solid rgba(255, 234, 61, 0.4);
+    color: var(--neon-yellow);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .game-card {
+    background: linear-gradient(135deg, #0c1224, #08091a);
+    border: 1px solid rgba(0, 240, 255, 0.18);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0, 240, 255, 0.08);
+  }
+
+  .game-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 0.85rem;
+  }
+
+  .game-status {
+    color: var(--fg-muted);
+  }
+
+  .game-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-mini {
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: var(--fg);
+    font-size: 0.82rem;
+  }
+  .btn-mini:hover {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+  }
+
+  .game-stage-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(79, 108, 255, 0.06), transparent 70%);
+  }
+
+  .game-cleared-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 9, 15, 0.85);
+    backdrop-filter: blur(6px);
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .cleared-card {
+    padding: 24px 28px;
+    text-align: center;
+    max-width: 360px;
+  }
+
+  .cleared-emoji {
+    font-size: 3rem;
+    margin-bottom: 8px;
+  }
+
+  .cleared-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 20px rgba(255, 234, 61, 0.5);
+    margin-bottom: 12px;
+  }
+
+  .cleared-msg {
+    color: var(--fg);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+
+  .cleared-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

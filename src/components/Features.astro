@@ -1,0 +1,80 @@
+---
+// 機能紹介: 4 つの主要価値
+const features = [
+  {
+    icon: '📐',
+    title: 'スケール校正',
+    body: '図面上の 2 点をクリックして実寸を入れるだけ。以降の配線長は実寸で計算されます。',
+  },
+  {
+    icon: '🔌',
+    title: '配線描画',
+    body: 'シンボルからシンボルへ。中継点も自由に。天井ふところ・床下・壁内・露出を線種で区別。',
+  },
+  {
+    icon: '📊',
+    title: '拾い出し集計',
+    body: 'シンボル種別 × 規格ごとに自動カウント。配線も種類別に総長を集計。',
+  },
+  {
+    icon: '📤',
+    title: '見積に渡せる CSV',
+    body: 'Excel ですぐ開ける UTF-8 BOM 付き CSV。見積管理アプリへの取り込みも簡単。',
+  },
+];
+---
+
+<section class="section" id="features">
+  <h2 class="section-title">できること</h2>
+  <p class="section-subtitle">
+    電気工事に必要な機能だけを揃えました。汎用 CAD は要りません。
+  </p>
+
+  <ul class="feature-grid">
+    {features.map((f) => (
+      <li class="feature-card">
+        <span class="feature-icon" aria-hidden="true">{f.icon}</span>
+        <h3 class="feature-title">{f.title}</h3>
+        <p class="feature-body">{f.body}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .feature-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .feature-card {
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .feature-card:hover {
+    border-color: rgba(0, 240, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .feature-icon {
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .feature-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .feature-body {
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+  }
+</style>

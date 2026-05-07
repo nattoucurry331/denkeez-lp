@@ -1,0 +1,84 @@
+---
+// 開発者の物語: 北嶺建設の代表が現役職人のために作ったというストーリー
+---
+
+<section class="section" id="story">
+  <h2 class="section-title">なぜこのアプリを作ったか</h2>
+
+  <div class="story-card">
+    <div class="story-quote-mark" aria-hidden="true">"</div>
+    <p class="story-text">
+      協力業者の電気工事職人さんから「平面図に器具位置を書き込めるツールが欲しい」という相談を受けて、
+      汎用 CAD では大げさだし、Excel では面倒臭い、ちょうどいい距離感のツールがどこにもない、という結論になりました。
+    </p>
+    <p class="story-text">
+      建設業の現場をやっている自分が、現場で困っている職人さんのために、
+      <strong>本業の合間にコツコツ作っている</strong>のが Denkeez です。
+    </p>
+    <p class="story-text">
+      機能は一気に増えませんが、「**この現場で困った**」を聞いたら、
+      数日後にはアプリに反映される、そういう距離感を大事にしています。
+    </p>
+    <div class="story-author">
+      <strong>有限会社 北嶺建設 代表 / Daisuke</strong>
+      <span class="story-author-meta">北海道・建設業 30 年</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .story-card {
+    position: relative;
+    padding: 48px 40px;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.04), rgba(255, 45, 209, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+
+  .story-quote-mark {
+    position: absolute;
+    top: 16px;
+    left: 24px;
+    font-size: 6rem;
+    line-height: 1;
+    color: rgba(0, 240, 255, 0.15);
+    font-family: Georgia, serif;
+    pointer-events: none;
+  }
+
+  .story-text {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--fg);
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .story-author {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .story-author strong {
+    color: var(--neon-cyan);
+  }
+  .story-author-meta {
+    font-size: 0.82rem;
+    color: var(--fg-muted);
+  }
+
+  @media (max-width: 640px) {
+    .story-card {
+      padding: 32px 22px;
+    }
+    .story-quote-mark {
+      top: 8px;
+      left: 14px;
+      font-size: 4rem;
+    }
+  }
+</style>
